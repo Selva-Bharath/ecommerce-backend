@@ -66,6 +66,16 @@ public class EcommerceController {
         return ResponseEntity.ok("Deleted Successfully");
     }
 
+
+    @DeleteMapping("/orders/{id}")
+    public ResponseEntity<?> cancelOrder(@PathVariable Long id) {
+        try {
+            service.deleteOrder(id);
+            return ResponseEntity.ok("Order Cancelled Successfully");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
     // ================= CART =================
 
     @PostMapping("/cart/{userId}")
@@ -118,15 +128,7 @@ public class EcommerceController {
         return ResponseEntity.ok(service.updateOrderStatus(id, status));
     }
 
-    @DeleteMapping("/orders/{id}")
-    public ResponseEntity<?> cancelOrder(@PathVariable Long id) {
-        try {
-            service.deleteOrder(id);
-            return ResponseEntity.ok("Order Cancelled Successfully");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
+
 
     // ================= FORGOT PASSWORD (FIXED) =================
 
