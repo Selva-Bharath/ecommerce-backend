@@ -151,7 +151,12 @@ public class EcommerceService {
         CustomerOrder order = orderRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Order not found"));
 
-        order.setStatus(OrderStatus.valueOf(status));
+        try {
+            OrderStatus newStatus = OrderStatus.valueOf(status.toUpperCase());
+            order.setStatus(newStatus);
+        } catch (Exception e) {
+            throw new RuntimeException("Invalid status: " + status);
+        }
 
         return orderRepo.save(order);
     }
